@@ -1,0 +1,320 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2685.2">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
+  </style>
+</head>
+<body>
+<p class="p1">&lt;!DOCTYPE html&gt;</p>
+<p class="p1">&lt;html lang="zh-TW"&gt;</p>
+<p class="p1">&lt;head&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta charset="UTF-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;title&gt;HACKER_01 | Agri-Econ &amp; Data Science Portfolio&lt;/title&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;link rel="icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8/5+hHgAHggJ/PchI7wAAAABJRU5ErkJggg=="&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta name="description" content="An interactive Game Boy style portfolio."&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta property="og:title" content="HACKER_01 Portfolio"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta property="og:description" content="Access the terminal to view my research, skills, and projects."&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta property="og:type" content="website"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta property="og:image" content="preview.png"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta name="twitter:card" content="summary_large_image"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&amp;display=swap" rel="stylesheet"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;script src="https://cdn.jsdelivr.net/npm/phaser@3.60.0/dist/phaser.min.js"&gt;&lt;/script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;style&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>:root { --gb-0: #0f380f; --gb-1: #306230; --gb-2: #8bac0f; --gb-3: #9bbc0f; }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>body {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin: 0; background-color: #050505; display: flex;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>justify-content: center; align-items: center; height: 100vh;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>color: var(--gb-3); font-family: 'Press Start 2P', cursive; overflow: hidden;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>user-select: none; -webkit-user-select: none;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>#game-wrapper { position: relative; }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>#game-container {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border: 20px solid #555; border-radius: 10px 10px 40px 10px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>box-shadow: 0 0 50px rgba(0, 255, 0, 0.1); outline: none;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>touch-action: none;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>#start-overlay {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>position: absolute; top: 20px; left: 20px; width: 480px; height: 432px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background-color: var(--gb-0); display: flex; flex-direction: column;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>justify-content: center; align-items: center; z-index: 100; cursor: pointer;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.blink { animation: blinker 1s linear infinite; }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>@keyframes blinker { 50% { opacity: 0; } }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/style&gt;</p>
+<p class="p1">&lt;/head&gt;</p>
+<p class="p1">&lt;body&gt;</p>
+<p class="p1">&lt;div id="game-wrapper"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div id="game-container"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div id="start-overlay" onclick="startGame()"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div style="font-size: 24px; color: #9bbc0f; margin-bottom: 20px;"&gt;SYSTEM BOOT&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="blink" style="font-size: 12px; color: #8bac0f;"&gt;CLICK TO INITIALIZE&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p1">&lt;script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>// === 核心資料庫 (請在這裡填寫您的真實資料) ===</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const CONTENT = {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>BIO: [</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"ID: HACKER_01",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"CLASS: PhD CANDIDATE",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"STATS:",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"- AGRI-ECON: LV.99",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"- DATA SCI : LV.85",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"- STRATEGY : LV.90",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"[PRESS 'X' TO EXIT]"</p>
+<p class="p1"><span class="Apple-converted-space">        </span>],</p>
+<p class="p1"><span class="Apple-converted-space">        </span>SKILLS: [</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"&gt; PYTHON / R",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"&gt; ECONOMETRICS",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"&gt; GAME THEORY",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"&gt; GENERATIVE AI",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"STATUS: HIRED",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"[PRESS 'X' TO EXIT]"</p>
+<p class="p1"><span class="Apple-converted-space">        </span>],</p>
+<p class="p1"><span class="Apple-converted-space">        </span>CONTACT: [</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"LINK ESTABLISHED:",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"[1] GITHUB",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"[2] EMAIL",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"SELECT OPTION...",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>"[PRESS 'X' TO EXIT]"</p>
+<p class="p1"><span class="Apple-converted-space">        </span>],</p>
+<p class="p1"><span class="Apple-converted-space">        </span>LINKS: {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>1: "https://github.com",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>2: "mailto:your.email@example.com"</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>};</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>const PALETTE = { DARKEST: 0x0f380f, DARK: 0x306230, LIGHT: 0x8bac0f, LIGHTEST: 0x9bbc0f };</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const GameState = { spawnPoint: { x: 20, y: 100 } };</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>class AudioManager {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>constructor() { this.ctx = null; this.masterGain = null; }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>init() {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const AC = window.AudioContext || window.webkitAudioContext;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>this.ctx = new AC();</p>
+<p class="p1"><span class="Apple-converted-space">            </span>this.masterGain = this.ctx.createGain();</p>
+<p class="p1"><span class="Apple-converted-space">            </span>this.masterGain.gain.value = 0.3;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>this.masterGain.connect(this.ctx.destination);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>this.noiseBuffer = this.createNoise();</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>createNoise() {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const bs = this.ctx.sampleRate * 2;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const b = this.ctx.createBuffer(1, bs, this.ctx.sampleRate);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const d = b.getChannelData(0);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>for(let i=0; i&lt;bs; i++) d[i] = Math.random() * 2 - 1;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>return b;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>playTone(freq, type, duration) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (!this.ctx) return;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const o = this.ctx.createOscillator();</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const g = this.ctx.createGain();</p>
+<p class="p1"><span class="Apple-converted-space">            </span>o.type = type; o.frequency.setValueAtTime(freq, this.ctx.currentTime);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>g.gain.setValueAtTime(0.3, this.ctx.currentTime);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>g.gain.exponentialRampToValueAtTime(0.01, this.ctx.currentTime + duration);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>o.connect(g); g.connect(this.masterGain);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>o.start(); o.stop(this.ctx.currentTime + duration);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>playStep() {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (!this.ctx) return;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const s = this.ctx.createBufferSource(); s.buffer = this.noiseBuffer;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const f = this.ctx.createBiquadFilter(); f.type='lowpass'; f.frequency.value=800;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const g = this.ctx.createGain(); g.gain.setValueAtTime(0.5, this.ctx.currentTime);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>g.gain.exponentialRampToValueAtTime(0.01, this.ctx.currentTime+0.05);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>s.connect(f); f.connect(g); g.connect(this.masterGain);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>s.start(); s.stop(this.ctx.currentTime+0.05);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>playUI() { this.playTone(1200, 'square', 0.1); }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>playBack() { this.playTone(400, 'square', 0.1); }<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>playWarp() {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (!this.ctx) return;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const o = this.ctx.createOscillator(); const g = this.ctx.createGain();</p>
+<p class="p1"><span class="Apple-converted-space">            </span>o.type = 'sawtooth'; o.frequency.setValueAtTime(880, this.ctx.currentTime);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>o.frequency.linearRampToValueAtTime(110, this.ctx.currentTime + 0.3);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>g.gain.setValueAtTime(0.5, this.ctx.currentTime);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>g.gain.linearRampToValueAtTime(0, this.ctx.currentTime + 0.3);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>o.connect(g); g.connect(this.masterGain); o.start(); o.stop(this.ctx.currentTime + 0.3);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const audio = new AudioManager();</p>
+<p class="p1"><span class="Apple-converted-space">    </span>function startGame() {<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>audio.init();<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>document.getElementById('start-overlay').style.display='none';<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>if(window.game) audio.playTone(600, 'square', 0.2);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>class TerminalScene extends Phaser.Scene {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>constructor() { super({ key: 'TerminalScene' }); }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>init(data) { this.mode = data.mode || 'BIO'; }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>create() {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>this.add.rectangle(80, 72, 160, 144, 0x000000, 0.7);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const win = this.add.graphics();</p>
+<p class="p1"><span class="Apple-converted-space">            </span>win.fillStyle(PALETTE.LIGHT, 1); win.fillRect(10, 10, 140, 124);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>win.lineStyle(2, PALETTE.DARKEST, 1); win.strokeRect(10, 10, 140, 124);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>this.add.rectangle(80, 20, 136, 14, PALETTE.DARKEST);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>this.add.text(80, 20, `TERMINAL: ${this.mode}`, { fontSize: '8px', color: '#9bbc0f', fontFamily: '"Press Start 2P"' }).setOrigin(0.5);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const lines = CONTENT[this.mode]; let y = 40;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>lines.forEach(line =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>this.add.text(16, y, line, { fontSize: '8px', color: '#0f380f', fontFamily: '"Press Start 2P"', lineSpacing: 4 });</p>
+<p class="p1"><span class="Apple-converted-space">                </span>y += 12;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>});</p>
+<p class="p1"><span class="Apple-converted-space">            </span>this.keys = this.input.keyboard.addKeys('X,ONE,TWO,ESC');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (this.mode === 'CONTACT') {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>this.input.keyboard.on('keydown-ONE', () =&gt; this.openLink(1));</p>
+<p class="p1"><span class="Apple-converted-space">                </span>this.input.keyboard.on('keydown-TWO', () =&gt; this.openLink(2));</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>update() {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (Phaser.Input.Keyboard.JustDown(this.keys.X) || Phaser.Input.Keyboard.JustDown(this.keys.ESC)) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>audio.playBack(); this.scene.stop(); this.scene.resume('RoomScene');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>openLink(id) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const url = CONTENT.LINKS[id];</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (url) { audio.playUI(); window.open(url, '_blank'); }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>class RoomScene extends Phaser.Scene {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>constructor() { super({ key: 'RoomScene' }); }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>create() {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>this.cameras.main.setBackgroundColor(PALETTE.DARK);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>this.cameras.main.fadeIn(500, 15, 56, 15);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const platforms = this.physics.add.staticGroup();</p>
+<p class="p1"><span class="Apple-converted-space">            </span>for(let i=0; i&lt;10; i++) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>let r = this.add.rectangle(8+i*16, 136, 16, 16, PALETTE.LIGHT).setStrokeStyle(1, PALETTE.DARKEST);</p>
+<p class="p1"><span class="Apple-converted-space">                </span>this.physics.add.existing(r, true); platforms.add(r);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>this.door = this.physics.add.staticSprite(20, 116, 'door');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>this.player = this.physics.add.sprite(40, 100, 'player');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>this.player.setCollideWorldBounds(true);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>this.physics.add.collider(this.player, platforms);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>this.terminals = this.physics.add.staticGroup();</p>
+<p class="p1"><span class="Apple-converted-space">            </span>this.createTerminal(60, 110, 'BIO'); this.createTerminal(100, 110, 'SKILLS'); this.createTerminal(140, 110, 'CONTACT');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>this.physics.add.overlap(this.player, this.terminals, this.onTouchTerminal, null, this);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>this.physics.add.overlap(this.player, this.door, this.exitRoom, null, this);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>this.cursors = this.input.keyboard.createCursorKeys();</p>
+<p class="p1"><span class="Apple-converted-space">            </span>this.spaceKey = this.input.keyboard.addKey('SPACE');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>this.hintText = this.add.text(80, 10, '', { fontSize: '8px', color: '#9bbc0f', align: 'center' }).setOrigin(0.5);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>this.stepTimer = 0;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>createTerminal(x, y, id) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>let g = this.make.graphics({x:0, y:0, add:false});</p>
+<p class="p1"><span class="Apple-converted-space">            </span>g.fillStyle(PALETTE.DARKEST); g.fillRect(0,0,16,16);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>g.fillStyle(PALETTE.LIGHT); g.fillRect(2,2,12,8);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>g.fillStyle(PALETTE.LIGHTEST); g.fillRect(4,4,8,4);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>g.generateTexture('term_'+id, 16, 16);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>let t = this.terminals.create(x, y, 'term_'+id);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>t.setData('id', id);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>update(time, delta) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>let moving = false;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (this.cursors.left.isDown) { this.player.setVelocityX(-80); this.player.setFlipX(true); moving=true; }</p>
+<p class="p1"><span class="Apple-converted-space">            </span>else if (this.cursors.right.isDown) { this.player.setVelocityX(80); this.player.setFlipX(false); moving=true; }</p>
+<p class="p1"><span class="Apple-converted-space">            </span>else { this.player.setVelocityX(0); }</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (moving &amp;&amp; this.player.body.touching.down) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>this.stepTimer += delta;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>if (this.stepTimer &gt; 300) { audio.playStep(); this.stepTimer = 0; }</p>
+<p class="p1"><span class="Apple-converted-space">            </span>} else { this.stepTimer = 300; }</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (this.cursors.up.isDown &amp;&amp; this.player.body.touching.down) {<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                </span>this.player.setVelocityY(-150); audio.playTone(150, 'square', 0.1);<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (!this.physics.overlap(this.player, this.terminals)) this.hintText.setText("");</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>onTouchTerminal(player, terminal) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const id = terminal.getData('id');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>this.hintText.setText(`[SPACE] READ ${id}`);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (Phaser.Input.Keyboard.JustDown(this.spaceKey)) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>audio.playUI(); this.scene.pause(); this.scene.launch('TerminalScene', { mode: id });</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>exitRoom() {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (this.isTransitioning) return;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>this.isTransitioning = true; this.player.setVelocity(0); audio.playWarp();</p>
+<p class="p1"><span class="Apple-converted-space">            </span>this.cameras.main.fadeOut(500, 15, 56, 15);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, () =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>this.isTransitioning = false; this.scene.start('WorldScene');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>});</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>class BootScene extends Phaser.Scene {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>constructor() { super({ key: 'BootScene' }); }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>preload() {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>let g = this.make.graphics({ add: false });</p>
+<p class="p1"><span class="Apple-converted-space">            </span>g.fillStyle(PALETTE.DARK, 1); g.fillRect(0, 0, 16, 16);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>g.fillStyle(PALETTE.LIGHTEST, 1); g.fillRect(2, 4, 12, 4);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>g.generateTexture('player', 16, 16);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>g.clear(); g.fillStyle(PALETTE.DARKEST, 1); g.fillRect(0, 0, 16, 24);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>g.fillStyle(PALETTE.LIGHT, 1); g.fillRect(2, 2, 12, 20);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>g.generateTexture('door', 16, 24);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>create() { this.scene.start('WorldScene'); }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>class WorldScene extends Phaser.Scene {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>constructor() { super({ key: 'WorldScene' }); }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>create() {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>this.cameras.main.setBackgroundColor(PALETTE.LIGHT);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>this.cameras.main.fadeIn(500, 15, 56, 15);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const platforms = this.physics.add.staticGroup();</p>
+<p class="p1"><span class="Apple-converted-space">            </span>for(let i=0; i&lt;10; i++) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>let r = this.add.rectangle(8+i*16, 136, 16, 16, PALETTE.DARK).setStrokeStyle(1, PALETTE.DARKEST);</p>
+<p class="p1"><span class="Apple-converted-space">                </span>this.physics.add.existing(r, true); platforms.add(r);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>this.door = this.physics.add.staticSprite(140, 74, 'door');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>this.player = this.physics.add.sprite(GameState.spawnPoint.x, GameState.spawnPoint.y, 'player');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>this.player.setCollideWorldBounds(true);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>this.physics.add.collider(this.player, platforms);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>this.physics.add.collider(this.player, this.door);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>this.add.text(10, 10, 'CITY MAP', { fontSize: '8px', color: '#0f380f', fontFamily: '"Press Start 2P"' });</p>
+<p class="p1"><span class="Apple-converted-space">            </span>this.cursors = this.input.keyboard.createCursorKeys();</p>
+<p class="p1"><span class="Apple-converted-space">            </span>this.physics.add.overlap(this.player, this.door, this.enterDoor, null, this);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>this.stepTimer = 0;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>update(time, delta) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>let moving = false;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (this.cursors.left.isDown) { this.player.setVelocityX(-80); this.player.setFlipX(true); moving=true; }</p>
+<p class="p1"><span class="Apple-converted-space">            </span>else if (this.cursors.right.isDown) { this.player.setVelocityX(80); this.player.setFlipX(false); moving=true; }</p>
+<p class="p1"><span class="Apple-converted-space">            </span>else { this.player.setVelocityX(0); }</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (moving &amp;&amp; this.player.body.touching.down) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>this.stepTimer += delta;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>if (this.stepTimer &gt; 300) { audio.playStep(); this.stepTimer = 0; }</p>
+<p class="p1"><span class="Apple-converted-space">            </span>} else { this.stepTimer = 300; }</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (this.cursors.up.isDown &amp;&amp; this.player.body.touching.down) {<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                </span>this.player.setVelocityY(-150); audio.playTone(150, 'square', 0.1);<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>enterDoor(player, door) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (this.isTransitioning) return;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>this.isTransitioning = true; player.setVelocity(0, 0);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>GameState.spawnPoint = { x: door.x - 20, y: door.y };</p>
+<p class="p1"><span class="Apple-converted-space">            </span>audio.playWarp();</p>
+<p class="p1"><span class="Apple-converted-space">            </span>this.cameras.main.fadeOut(500, 15, 56, 15);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, () =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>this.isTransitioning = false; this.scene.start('RoomScene');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>});</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>const config = {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>type: Phaser.AUTO, width: 160, height: 144, zoom: 3, parent: 'game-container', pixelArt: true,</p>
+<p class="p1"><span class="Apple-converted-space">        </span>physics: { default: 'arcade', arcade: { gravity: { y: 300 }, debug: false } },</p>
+<p class="p1"><span class="Apple-converted-space">        </span>scene: [BootScene, WorldScene, RoomScene, TerminalScene]</p>
+<p class="p1"><span class="Apple-converted-space">    </span>};</p>
+<p class="p1"><span class="Apple-converted-space">    </span>window.game = new Phaser.Game(config);</p>
+<p class="p1">&lt;/script&gt;</p>
+<p class="p1">&lt;/body&gt;</p>
+<p class="p1">&lt;/html&gt;</p>
+</body>
+</html>
